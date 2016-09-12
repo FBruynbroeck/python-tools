@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import glob
+import os
+import sys
+
+
+def yesno(question):
+    question = "%s [yes/No] " % question
+    answers = {
+        False: ('', 'n', 'no'),
+        True: ('y', 'yes'),
+    }
+    while 1:
+        answer = raw_input(question).lower()
+        for option in answers:
+            if answer in answers[option]:
+                return option
+        print >>sys.stderr, "You have to answer with y, yes, n or no."
+
+
+buildout = "${buildout:directory}"
+prefix = os.path.expanduser("${install-links:prefix}")
+bindir = os.path.join(prefix, 'bin')
+
+
+if not os.path.exists(bindir):
+    if not yesno("Create directory '%s'?" % bindir):
+        sys.exit(1)
+    os.makedirs(bindir)
+
+
+files = []
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'addchangelogentry')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'bumpversion')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'check-manifest')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'epylint')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'flake8')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'fullrelease')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'i18ndude')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'lasttagdiff')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'lasttaglog')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'longtest')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'mrbob')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pep8')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'polint')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'postrelease')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pot-create')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'prerelease')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pyflakes')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pylint')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pylint-gui')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'pyreverse')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'release')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'symilar')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'templer')))
+files.sort()
+links = [(x, os.path.basename(x)) for x in files]
+for src, name in links:
+    if not os.path.exists(src):
+        continue
+    dst = os.path.join(bindir, name)
+    if os.path.lexists(dst):
+        if os.path.islink(dst):
+            if os.readlink(dst) == src:
+                print "No change needed for symlink to '%s' at '%s'." % (src, dst)
+                continue
+            else:
+                if not yesno("Replace symlink at '%s' pointing to '%s' with symlink to '%s'?" % (dst, os.readlink(dst), src)):
+                    continue
+                os.unlink(dst)
+        else:
+            if not yesno("Replace regular file '%s' with symlink to '%s'?" % (dst, src)):
+                continue
+            os.unlink(dst)
+    os.symlink(src, dst)
+    print "Created symlink to '%s' at '%s'." % (src, dst)
