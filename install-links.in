@@ -31,9 +31,9 @@ if not os.path.exists(bindir):
 
 files = []
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'addchangelogentry')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'autopep8')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'bumpversion')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'check-manifest')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'epylint')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'flake8')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'fullrelease')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'i18ndude')))
@@ -44,15 +44,8 @@ files.extend(glob.glob(os.path.join(buildout, 'bin', 'mrbob')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'pep8')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'polint')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'postrelease')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'pot-create')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'prerelease')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'pyflakes')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'pylint')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'pylint-gui')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'pyreverse')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'release')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'symilar')))
-files.extend(glob.glob(os.path.join(buildout, 'bin', 'templer')))
 files.sort()
 links = [(x, os.path.basename(x)) for x in files]
 for src, name in links:
