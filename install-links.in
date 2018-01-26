@@ -46,6 +46,7 @@ files.extend(glob.glob(os.path.join(buildout, 'bin', 'polint')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'postrelease')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'prerelease')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'release')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'autotranslate')))
 files.sort()
 links = [(x, os.path.basename(x)) for x in files]
 for src, name in links:
