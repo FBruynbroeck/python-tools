@@ -1,10 +1,10 @@
 #! /bin/sh
-if [ "${VIRTUALENV24}" ]; then
-    VIRT24=${VIRTUALENV24}
+if [ "${VIRTUALENV27}" ]; then
+    VIRT27=${VIRTUALENV27}
 else
-    VIRT24='virtualenv'
+    VIRT27='virtualenv'
 fi
 
-${VIRT24} -p python2.7 .
-./bin/pip install --pypi-url=https://pypi.python.org/simple setuptools==33.1.1 zc.buildout==2.9.5
+${VIRT27} -p python2.7 .
+./bin/pip install setuptools==33.1.1 zc.buildout==2.9.5
 ./bin/buildout "$@"
