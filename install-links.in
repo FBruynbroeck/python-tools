@@ -47,6 +47,9 @@ files.extend(glob.glob(os.path.join(buildout, 'bin', 'postrelease')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'prerelease')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'release')))
 files.extend(glob.glob(os.path.join(buildout, 'bin', 'autotranslate')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', '*_hooks')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'changelogrelease')))
+files.extend(glob.glob(os.path.join(buildout, 'bin', 'fullrelease.sh')))
 files.sort()
 links = [(x, os.path.basename(x)) for x in files]
 for src, name in links:
